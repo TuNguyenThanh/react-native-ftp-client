@@ -782,10 +782,10 @@ void createResourceWriteStreamClientCallBack(CFWriteStreamRef stream, CFStreamEv
     if (self.serverURL == nil) {
         return NO;
     }
-
-    NSString *theWhileServerURLString = [self.serverURL.absoluteString stringDecorateWithUsername:self.username password:self.password];
-
-    self.serverURL = [NSURL URLWithString:theWhileServerURLString];
+    NSString *auth = [NSString stringWithFormat:@"ftp://%@:%@@", self.username, self.password];
+    NSString *newServerURL = [self.serverURL.absoluteString stringByReplacingOccurrencesOfString:@"ftp://"
+                                         withString: auth];
+    self.serverURL = [NSURL URLWithString:newServerURL];
 
     SInt32 errorCode = 0;
 
